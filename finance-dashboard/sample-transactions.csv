@@ -1,0 +1,21 @@
+Date,Description,Category,Type,Amount,Notes
+2026-03-01,Monthly Salary,Salary,income,85000,March salary
+2026-03-02,Apartment Rent,Rent,expense,18000,Monthly rent
+2026-03-05,Zomato,Food,expense,450,Dinner
+2026-03-06,Grocery Shopping,Food,expense,3800,BigBasket order
+2026-03-08,Electricity Bill,Utilities,expense,1800,BESCOM bill
+2026-03-10,Uber Rides,Transport,expense,650,Office commute
+2026-03-12,Netflix,Entertainment,expense,649,Monthly subscription
+2026-03-14,Freelance Payment,Freelance,income,15000,React project
+2026-03-15,Amazon Shopping,Shopping,expense,4200,Headphones
+2026-03-18,Gym Membership,Health,expense,2500,Cult.fit monthly
+2026-03-20,Coffee - Starbucks,Food,expense,480,Client meeting
+2026-03-22,Metro Card Recharge,Transport,expense,300,Monthly top-up
+2026-03-25,Medical Checkup,Health,expense,1200,Annual tests
+2026-03-28,Spotify Premium,Entertainment,expense,119,Monthly
+2026-02-01,Monthly Salary,Salary,income,85000,February salary
+2026-02-03,Apartment Rent,Rent,expense,18000,Monthly rent
+2026-02-07,Grocery Shopping,Food,expense,4100,Weekly groceries
+2026-02-14,Restaurant Dinner,Food,expense,2800,Valentine day dinner
+2026-02-18,Freelance UI Work,Freelance,income,12000,Logo design
+2026-02-22,Swiggy Orders,Food,expense,890,Lunch x3

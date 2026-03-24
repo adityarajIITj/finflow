@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinFlow — Dashboard</title>
+  <meta name="description" content="FinFlow personal finance dashboard — track expenses, budgets, and savings with AI insights." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="app.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <!-- Toast Container -->
+  <div id="toast-root" aria-live="polite"></div>
+
+  <div class="shell">
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <a href="#" class="sidebar-logo">
+          <div class="sidebar-logo-icon">💸</div>
+          <span class="sidebar-logo-name">FinFlow</span>
+        </a>
+
+        <nav class="sidebar-nav">
+          <a href="#" class="nav-link active" data-page="dashboard">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+            <span>Dashboard</span>
+          </a>
+          <a href="#" class="nav-link" data-page="transactions">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+            <span>Transactions</span>
+          </a>
+          <a href="#" class="nav-link" data-page="analytics">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <span>Analytics</span>
+          </a>
+          <a href="#" class="nav-link" data-page="budgets">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            <span>Budgets</span>
+          </a>
+          <a href="#" class="nav-link" data-page="advisor">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span>AI Advisor</span>
+            <span class="nav-badge">AI</span>
+          </a>
+          <a href="#" class="nav-link" data-page="settings">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+            <span>Settings</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="user-card">
+          <div class="user-avatar" id="user-avatar"></div>
+          <div class="user-info">
+            <div class="user-name" id="user-name"></div>
+            <div class="user-email" id="user-email"></div>
+          </div>
+          <button class="logout-btn" id="logout-btn" title="Sign out">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="16" height="16"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Main ── -->
+    <div class="main-area">
+      <!-- Topbar -->
+      <header class="topbar">
+        <button class="hamburger" id="hamburger">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="topbar-title" id="topbar-title">Dashboard</div>
+        <div class="topbar-right">
+          <div class="month-filter">
+            <select id="month-select" class="month-select"></select>
+          </div>
+          <button class="topbar-add-btn" id="topbar-add-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Transaction
+          </button>
+        </div>
+      </header>
+
+      <!-- Pages -->
+      <main class="content">
+
+        <!-- ══ DASHBOARD ══ -->
+        <section class="page" id="page-dashboard">
+          <div class="kpi-row" id="kpi-row"></div>
+
+          <div class="two-col-grid">
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <h3>Monthly Cash Flow</h3>
+                <div class="chart-legend-row">
+                  <span class="cleg income">Income</span>
+                  <span class="cleg expense">Expenses</span>
+                </div>
+              </div>
+              <canvas id="cashflow-chart" height="220"></canvas>
+            </div>
+            <div class="chart-card">
+              <div class="chart-card-header"><h3>Spending by Category</h3></div>
+              <canvas id="donut-chart" height="200"></canvas>
+              <div id="donut-legend" class="donut-legend-list"></div>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <div class="section-card-header">
+              <h3>Recent Transactions</h3>
+              <button class="link-btn" data-goto="transactions">View all</button>
+            </div>
+            <div id="dash-txn-list" class="txn-table-wrap">
+              <table class="txn-table"><tbody id="dash-txn-body"></tbody></table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ TRANSACTIONS ══ -->
+        <section class="page" id="page-transactions">
+          <div class="page-toolbar">
+            <div class="search-bar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="txn-search" placeholder="Search transactions…" />
+            </div>
+            <select class="filter-select" id="txn-type-filter">
+              <option value="all">All Types</option>
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
+            <select class="filter-select" id="txn-cat-filter">
+              <option value="all">All Categories</option>
+            </select>
+            <button class="btn-outline" id="import-csv-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Import CSV
+            </button>
+            <button class="btn-outline" id="export-csv-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Export
+            </button>
+          </div>
+
+          <!-- CSV Drop Zone -->
+          <div class="drop-zone" id="drop-zone">
+            <div class="drop-zone-inner" id="drop-zone-inner">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40" style="color:var(--text-subtle)"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <p>Drag &amp; drop a CSV file here, or <label for="csv-file-input" class="csv-link">browse</label></p>
+              <p style="color:var(--text-subtle);font-size:12px">Supports exports from any bank — we'll help you map the columns</p>
+              <input type="file" id="csv-file-input" accept=".csv" style="display:none" />
+            </div>
+          </div>
+
+          <div class="section-card">
+            <div class="section-card-header">
+              <h3>All Transactions <span class="count-badge" id="txn-count-badge">0</span></h3>
+            </div>
+            <div class="txn-table-wrap">
+              <table class="txn-table">
+                <thead>
+                  <tr>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th style="text-align:right">Amount</th>
+                    <th style="width:60px"></th>
+                  </tr>
+                </thead>
+                <tbody id="all-txn-body"></tbody>
+              </table>
+            </div>
+            <div class="empty-state" id="txn-empty">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              <p>No transactions yet.<br/>Add one or import from CSV.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ ANALYTICS ══ -->
+        <section class="page" id="page-analytics">
+          <div class="analytics-grid">
+            <div class="chart-card span-2">
+              <div class="chart-card-header">
+                <h3>Income vs Expenses — Last 6 Months</h3>
+              </div>
+              <canvas id="trend-chart" height="200"></canvas>
+            </div>
+            <div class="chart-card">
+              <div class="chart-card-header"><h3>Top Spending Categories</h3></div>
+              <canvas id="cat-bar-chart" height="240"></canvas>
+            </div>
+            <div class="chart-card">
+              <div class="chart-card-header"><h3>Savings Rate</h3></div>
+              <div class="savings-stat" id="savings-stat"></div>
+              <canvas id="savings-chart" height="200"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ BUDGETS ══ -->
+        <section class="page" id="page-budgets">
+          <div class="budget-grid" id="budget-grid"></div>
+          <div class="empty-state" id="budget-empty" style="display:none">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            <p>No budget data. Add transactions to see budget tracking.</p>
+          </div>
+        </section>
+
+        <!-- ══ AI ADVISOR ══ -->
+        <section class="page" id="page-advisor">
+          <div class="advisor-layout">
+            <div class="advisor-sidebar">
+              <div class="advisor-head">
+                <div class="advisor-icon">✦</div>
+                <div>
+                  <h2>AI Savings Advisor</h2>
+                  <p>Powered by Gemini</p>
+                </div>
+              </div>
+              <p class="advisor-desc">Your personal finance AI analyzes your spending patterns and gives you actionable, data-driven advice to improve your savings rate.</p>
+              <button class="btn-primary" id="analyze-btn">Analyze My Finances</button>
+              <div class="advisor-note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Your data never leaves your device. The analysis is sent only to Gemini's API.
+              </div>
+              <div class="api-key-prompt" id="api-key-prompt">
+                <label>Gemini API Key</label>
+                <div class="api-key-row">
+                  <input type="password" id="gemini-key-input" placeholder="AIza…" />
+                  <button class="btn-sm" id="save-key-btn">Save</button>
+                </div>
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" class="link-sm">Get a free API key →</a>
+              </div>
+            </div>
+            <div class="advisor-output-wrap">
+              <div class="advisor-output" id="advisor-output">
+                <div class="advisor-placeholder">
+                  <div class="advisor-placeholder-icon">✦</div>
+                  <h3>Ready to analyze</h3>
+                  <p>Click "Analyze My Finances" to get personalized savings advice based on your actual spending data.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ SETTINGS ══ -->
+        <section class="page" id="page-settings">
+          <div class="settings-layout">
+            <div class="settings-section">
+              <h3>Profile</h3>
+              <div class="settings-card">
+                <div class="settings-row">
+                  <div class="user-avatar lg" id="settings-avatar"></div>
+                  <div>
+                    <div class="settings-name" id="settings-name"></div>
+                    <div class="settings-email" id="settings-email"></div>
+                    <div class="settings-since" id="settings-since"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <h3>AI Configuration</h3>
+              <div class="settings-card">
+                <div class="form-group">
+                  <label>Gemini API Key</label>
+                  <p class="form-hint">Used for the AI Advisor feature. Stored locally in your browser.</p>
+                  <div class="settings-input-row">
+                    <input type="password" id="settings-api-key" placeholder="AIza…" />
+                    <button class="btn-sm" id="settings-save-key">Save Key</button>
+                  </div>
+                  <a href="https://aistudio.google.com/app/apikey" target="_blank" class="link-sm">Get a free Gemini API key →</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <h3>Data Management</h3>
+              <div class="settings-card">
+                <div class="settings-action-row">
+                  <div>
+                    <div class="settings-action-title">Export Transactions</div>
+                    <div class="settings-action-desc">Download all transactions as a CSV file</div>
+                  </div>
+                  <button class="btn-outline" id="settings-export">Export CSV</button>
+                </div>
+                <div class="settings-divider"></div>
+                <div class="settings-action-row">
+                  <div>
+                    <div class="settings-action-title settings-action-danger">Delete All Data</div>
+                    <div class="settings-action-desc">Permanently delete all your transactions and settings</div>
+                  </div>
+                  <button class="btn-danger" id="settings-clear">Delete All</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <h3>Account</h3>
+              <div class="settings-card">
+                <div class="settings-action-row">
+                  <div>
+                    <div class="settings-action-title settings-action-danger">Sign Out</div>
+                    <div class="settings-action-desc">Sign out of your FinFlow account</div>
+                  </div>
+                  <button class="btn-danger" id="settings-logout">Sign Out</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ── Add/Edit Transaction Modal ── -->
+  <div class="modal-backdrop" id="txn-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">Add Transaction</h3>
+        <button class="modal-close" id="modal-close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <form id="txn-form" autocomplete="off">
+        <div class="form-group">
+          <label>Description</label>
+          <input type="text" id="f-desc" placeholder="e.g. Monthly Salary" required />
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Amount (₹)</label>
+            <input type="number" id="f-amount" placeholder="0" min="1" step="0.01" required />
+          </div>
+          <div class="form-group">
+            <label>Type</label>
+            <select id="f-type">
+              <option value="expense">Expense</option>
+              <option value="income">Income</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Category</label>
+            <select id="f-category">
+              <option value="Food">Food</option>
+              <option value="Transport">Transport</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Health">Health</option>
+              <option value="Utilities">Utilities</option>
+              <option value="Rent">Rent</option>
+              <option value="Education">Education</option>
+              <option value="Salary">Salary</option>
+              <option value="Freelance">Freelance</option>
+              <option value="Investment">Investment</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" id="f-date" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Notes <span style="color:var(--text-subtle)">(optional)</span></label>
+          <input type="text" id="f-notes" placeholder="Any additional notes" />
+        </div>
+        <input type="hidden" id="f-edit-id" />
+        <div class="modal-actions">
+          <button type="button" class="btn-outline" id="modal-cancel">Cancel</button>
+          <button type="submit" class="btn-primary" id="modal-submit">Add Transaction</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── CSV Column Mapping Modal ── -->
+  <div class="modal-backdrop" id="csv-modal">
+    <div class="modal modal-wide">
+      <div class="modal-header">
+        <h3>Map CSV Columns</h3>
+        <button class="modal-close" id="csv-modal-close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <p style="color:var(--text-muted);font-size:13px;margin-bottom:20px">We detected the following columns. Map them to the correct fields:</p>
+      <div id="csv-column-map" class="csv-column-map"></div>
+      <div class="csv-preview-wrap">
+        <h4 style="font-size:13px;color:var(--text-muted);margin-bottom:10px">Preview (first 5 rows)</h4>
+        <div class="csv-preview-scroll">
+          <table class="txn-table" id="csv-preview-table"></table>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-outline" id="csv-cancel">Cancel</button>
+        <button class="btn-primary" id="csv-import-btn">Import <span id="csv-count"></span> Transactions</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Delete Confirm Modal ── -->
+  <div class="modal-backdrop" id="confirm-modal">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3 id="confirm-title">Confirm</h3>
+      </div>
+      <p id="confirm-body" style="color:var(--text-muted);font-size:14px;margin-bottom:24px"></p>
+      <div class="modal-actions">
+        <button class="btn-outline" id="confirm-cancel">Cancel</button>
+        <button class="btn-danger" id="confirm-ok">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

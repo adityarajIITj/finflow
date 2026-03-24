@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinFlow — Sign In</title>
+  <meta name="description" content="Sign in to FinFlow — your personal finance command center." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:           #08080f;
+      --surface:      #0f0f18;
+      --card:         #13131f;
+      --border:       rgba(255,255,255,0.07);
+      --border-focus: rgba(99,91,255,0.5);
+      --text:         #e8e8f2;
+      --text-muted:   #6b6b82;
+      --text-subtle:  #3d3d52;
+      --accent:       #635bff;
+      --accent-dim:   rgba(99,91,255,0.15);
+      --accent-hover: #7c76ff;
+      --success:      #22c55e;
+      --error:        #ef4444;
+      --error-dim:    rgba(239,68,68,0.1);
+      --font-head:    'Plus Jakarta Sans', sans-serif;
+      --font-body:    'Inter', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .auth-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+
+    /* ── Left Brand Panel ── */
+    .brand-panel {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-panel::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(99,91,255,0.12) 0%, transparent 70%);
+      bottom: -100px; left: -100px;
+      pointer-events: none;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo-icon {
+      width: 36px; height: 36px;
+      background: var(--accent);
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+    }
+
+    .brand-logo-name {
+      font-family: var(--font-head);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+
+    .brand-headline {
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-headline h1 {
+      font-family: var(--font-head);
+      font-size: 40px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -1.2px;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .brand-headline h1 span {
+      color: var(--accent);
+    }
+
+    .brand-headline p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      max-width: 380px;
+    }
+
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .feature-check {
+      width: 20px; height: 20px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(99,91,255,0.3);
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      color: var(--accent);
+      font-size: 11px;
+    }
+
+    /* ── Right Auth Panel ── */
+    .auth-panel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 32px;
+      background: var(--bg);
+    }
+
+    .auth-box {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .auth-tabs {
+      display: flex;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 32px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 9px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: var(--font-body);
+      border: none;
+      background: none;
+    }
+
+    .auth-tab.active {
+      background: var(--card);
+      color: var(--text);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .auth-heading {
+      margin-bottom: 28px;
+    }
+
+    .auth-heading h2 {
+      font-family: var(--font-head);
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+
+    .auth-heading p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 7px;
+    }
+
+    .form-group input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 11px 14px;
+      font-size: 14px;
+      font-family: var(--font-body);
+      color: var(--text);
+      transition: border-color 0.15s ease, background 0.15s ease;
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: var(--border-focus);
+      background: rgba(99,91,255,0.04);
+    }
+
+    .form-group input::placeholder { color: var(--text-subtle); }
+
+    .error-msg {
+      background: var(--error-dim);
+      border: 1px solid rgba(239,68,68,0.2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #fca5a5;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .error-msg.visible { display: block; }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 9px;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+      margin-top: 4px;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-submit:hover {
+      background: var(--accent-hover);
+      box-shadow: 0 4px 20px rgba(99,91,255,0.35);
+    }
+
+    .btn-submit:active { transform: translateY(1px); }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+      color: var(--text-subtle);
+      font-size: 12px;
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .demo-btn {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 9px;
+      padding: 11px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .demo-btn:hover {
+      background: var(--card);
+      border-color: rgba(255,255,255,0.12);
+      color: var(--text);
+    }
+
+    .auth-footer {
+      margin-top: 24px;
+      font-size: 12px;
+      color: var(--text-subtle);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .form-section { display: none; }
+    .form-section.active { display: block; }
+
+    @media (max-width: 768px) {
+      .auth-layout { grid-template-columns: 1fr; }
+      .brand-panel { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-layout">
+    <!-- Left: Brand Panel -->
+    <div class="brand-panel">
+      <div class="brand-logo">
+        <div class="brand-logo-icon">💸</div>
+        <span class="brand-logo-name">FinFlow</span>
+      </div>
+
+      <div class="brand-headline">
+        <h1>Your finances,<br /><span>finally clear.</span></h1>
+        <p>FinFlow gives you a complete picture of your money — income, spending, savings, and AI-powered advice — all in one place.</p>
+      </div>
+
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="feature-check">✓</div>
+          Import expenses via CSV — any bank format
+        </div>
+        <div class="feature-item">
+          <div class="feature-check">✓</div>
+          AI-powered savings advisor, personalized to your data
+        </div>
+        <div class="feature-item">
+          <div class="feature-check">✓</div>
+          Real-time budget tracking with overspend alerts
+        </div>
+        <div class="feature-item">
+          <div class="feature-check">✓</div>
+          Visual analytics — cashflow, categories, trends
+        </div>
+        <div class="feature-item">
+          <div class="feature-check">✓</div>
+          100% private — all data stays in your browser
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Auth Panel -->
+    <div class="auth-panel">
+      <div class="auth-box">
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="tab-signin">Sign In</button>
+          <button class="auth-tab" id="tab-signup">Create Account</button>
+        </div>
+
+        <!-- Sign In Form -->
+        <div class="form-section active" id="form-signin">
+          <div class="auth-heading">
+            <h2>Welcome back</h2>
+            <p>Sign in to your FinFlow account</p>
+          </div>
+          <div class="error-msg" id="signin-error"></div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="signin-email" placeholder="you@example.com" autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="signin-password" placeholder="Your password" autocomplete="current-password" />
+          </div>
+          <button class="btn-submit" id="signin-btn">Sign In</button>
+          <div class="divider">or</div>
+          <button class="demo-btn" id="demo-btn">Continue with Demo Account</button>
+          <div class="auth-footer">
+            Your financial data is stored locally in your browser.<br />We never send your data to any server.
+          </div>
+        </div>
+
+        <!-- Sign Up Form -->
+        <div class="form-section" id="form-signup">
+          <div class="auth-heading">
+            <h2>Get started free</h2>
+            <p>Create your personal finance account</p>
+          </div>
+          <div class="error-msg" id="signup-error"></div>
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="signup-name" placeholder="Aditya Joshi" autocomplete="name" />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="signup-email" placeholder="you@example.com" autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="signup-password" placeholder="Min. 6 characters" autocomplete="new-password" />
+          </div>
+          <button class="btn-submit" id="signup-btn">Create Account</button>
+          <div class="auth-footer">
+            Your financial data is stored locally in your browser.<br />We never send your data to any server.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script>
+    // Tab switching
+    const tabSignin = document.getElementById('tab-signin');
+    const tabSignup = document.getElementById('tab-signup');
+    const formSignin = document.getElementById('form-signin');
+    const formSignup = document.getElementById('form-signup');
+
+    tabSignin.addEventListener('click', () => {
+      tabSignin.classList.add('active'); tabSignup.classList.remove('active');
+      formSignin.classList.add('active'); formSignup.classList.remove('active');
+    });
+    tabSignup.addEventListener('click', () => {
+      tabSignup.classList.add('active'); tabSignin.classList.remove('active');
+      formSignup.classList.add('active'); formSignin.classList.remove('active');
+    });
+
+    function showError(id, msg) {
+      const el = document.getElementById(id);
+      el.textContent = msg; el.classList.add('visible');
+    }
+    function clearError(id) { document.getElementById(id).classList.remove('visible'); }
+
+    // Sign In
+    document.getElementById('signin-btn').addEventListener('click', () => {
+      clearError('signin-error');
+      const email    = document.getElementById('signin-email').value.trim();
+      const password = document.getElementById('signin-password').value;
+      if (!email || !password) return showError('signin-error', 'Please fill in all fields.');
+      if (Auth.signIn(email, password)) {
+        window.location.href = 'app.html';
+      } else {
+        showError('signin-error', 'Invalid email or password.');
+      }
+    });
+
+    // Sign Up
+    document.getElementById('signup-btn').addEventListener('click', () => {
+      clearError('signup-error');
+      const name  = document.getElementById('signup-name').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const pass  = document.getElementById('signup-password').value;
+      if (!name || !email || !pass) return showError('signup-error', 'Please fill in all fields.');
+      if (pass.length < 6) return showError('signup-error', 'Password must be at least 6 characters.');
+      const result = Auth.signUp(name, email, pass);
+      if (result.ok) {
+        window.location.href = 'app.html';
+      } else {
+        showError('signup-error', result.error);
+      }
+    });
+
+    // Demo
+    document.getElementById('demo-btn').addEventListener('click', () => {
+      Auth.signInDemo();
+      window.location.href = 'app.html';
+    });
+
+    // Enter key support
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        if (formSignin.classList.contains('active')) document.getElementById('signin-btn').click();
+        else document.getElementById('signup-btn').click();
+      }
+    });
+
+    // Already logged in?
+    if (Auth.currentUser()) window.location.href = 'app.html';
+  </script>
+</body>
+</html>
