@@ -1,4 +1,4 @@
-# 💸 FinFlow — Personal Finance Dashboard
+#  FinFlow — Personal Finance Dashboard
 
 A production-grade personal finance web app built with vanilla HTML, CSS, and JavaScript. No frameworks, no build step — open `login.html` in any browser and you're live.
 
@@ -10,19 +10,19 @@ A production-grade personal finance web app built with vanilla HTML, CSS, and Ja
 
 | Feature | Description |
 |---|---|
-| 🔐 **Auth System** | Sign up / sign in / demo account — multi-user, localStorage-based |
-| 📊 **Dashboard** | KPI cards, 6-month cash flow chart, spending donut, recent transactions |
-| 💳 **Transactions** | Full CRUD, real-time search & filter, edit/delete inline |
-| 📥 **CSV Import** | Drag & drop any bank export — column mapping modal + preview before import |
-| 📤 **CSV Export** | Download all your transactions in one click |
-| 📈 **Analytics** | Income vs expense trends, top category bar chart, savings rate over time |
-| 🎯 **Budgets** | Auto-calculated per-category progress bars with overspend alerts |
-| 🤖 **AI Advisor** | Gemini-powered savings advice — analyzes your real data, streams response |
-| ⚙️ **Settings** | Profile, API key management, data export, account wipe |
+|  **Auth System** | Sign up / sign in / demo account — multi-user, localStorage-based |
+|  **Dashboard** | KPI cards, 6-month cash flow chart, spending donut, recent transactions |
+|  **Transactions** | Full CRUD, real-time search & filter, edit/delete inline |
+|  **CSV Import** | Drag & drop any bank export — column mapping modal + preview before import |
+|  **CSV Export** | Download all your transactions in one click |
+|  **Analytics** | Income vs expense trends, top category bar chart, savings rate over time |
+|  **Budgets** | Auto-calculated per-category progress bars with overspend alerts |
+|  **AI Advisor** | Gemini-powered savings advice — analyzes your real data, streams response |
+|  **Settings** | Profile, API key management, data export, account wipe |
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 No installation required.
 
@@ -41,7 +41,7 @@ Or just double-click `login.html`.
 
 ---
 
-## 🤖 AI Advisor Setup
+##  AI Advisor Setup
 
 The AI Advisor uses the **Gemini 1.5 Flash** API (free tier).
 
@@ -53,7 +53,7 @@ The AI Advisor uses the **Gemini 1.5 Flash** API (free tier).
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 finflow/
@@ -68,7 +68,7 @@ finflow/
 
 ---
 
-## 📥 CSV Import
+## CSV Import
 
 FinFlow can import transaction exports from any bank. Supported formats:
 
@@ -86,7 +86,7 @@ A `sample-transactions.csv` is included in the repo for testing.
 
 ---
 
-## 🎨 Design System
+##  Design System
 
 - **Colors**: near-black `#08080f` base + electric indigo `#635bff` accent
 - **Typography**: [Plus Jakarta Sans](https://fonts.google.com/specimen/Plus+Jakarta+Sans) (headings) + [Inter](https://fonts.google.com/specimen/Inter) (body)
@@ -95,7 +95,7 @@ A `sample-transactions.csv` is included in the repo for testing.
 
 ---
 
-## 🔒 Privacy
+##  Privacy
 
 - **No backend, no database, no tracking.**
 - All data lives in `localStorage` — scoped per user account.
@@ -103,7 +103,7 @@ A `sample-transactions.csv` is included in the repo for testing.
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -117,10 +117,10 @@ A `sample-transactions.csv` is included in the repo for testing.
 
 ---
 
-## 📄 License
+##  License
 
 MIT — feel free to use, fork, and build on this.
 
 ---
 
-*Designed for real-world use, not a toy project.*
+
