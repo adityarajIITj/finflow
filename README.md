@@ -6,7 +6,7 @@ A production-grade personal finance web app built with vanilla HTML, CSS, and Ja
 
 ---
 
-## ✨ Features
+## Features
 
 | Feature | Description |
 |---|---|
